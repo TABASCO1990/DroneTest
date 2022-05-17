@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public class MoveDown : MonoBehaviour
 {
     private float speed = 1f;
-    private float stopPos = -108f;
-    public static bool stopMove;
+    private float stopPosition = -108f;
+    public static bool isMove = true;
     void Update()
     {
         MoveGroud();
@@ -12,13 +13,16 @@ public class MoveDown : MonoBehaviour
 
     private void MoveGroud()
     {
-        if (transform.position.z > stopPos)
+        if (isMove)
         {
-            transform.Translate(Vector3.back * Time.deltaTime * speed);
-        }
-        else
-        {
-            stopMove = true;
+            if (transform.position.z > stopPosition)
+            {
+                transform.Translate(Vector3.back * Time.deltaTime * speed);
+            }
+            else
+            {
+                isMove = false;
+            }
         }
     }
 }
