@@ -10,14 +10,13 @@ public class SpawnManager : MonoBehaviour
     private Vector3 positionBoss = new Vector3(0, 0, 13);
     private int currentGround = 0;
     private int currentBoss = 0;
-    
     private bool createBoss = true;
     private GameObject var;
-
+    private int countGround=1;
+    private int countRepeatGround = 3;
     void Start()
     {
         var = Instantiate(groundPrefab[currentGround], positionGround, groundPrefab[currentGround].transform.rotation);
-       
     }
 
     void Update()
@@ -30,19 +29,31 @@ public class SpawnManager : MonoBehaviour
     {
         if (Enemy.isDeadBoss == true)
         {
+            //countRepeatGround++;
             Destroy(var);
             MoveDown.isMove = true;
             createBoss = true;
-            if (groundPrefab.Count == currentGround+1)
+            Enemy.isDeadBoss = false;
+            if (groundPrefab.Count == currentGround + 1 && currentGround + 1 == countGround)
             {
                 print("Конец");
             }
             else
             {
-                currentGround++;
-                var = Instantiate(groundPrefab[currentGround], positionGround, groundPrefab[currentGround].transform.rotation);
+                countGround++;
+                if (countGround <= countRepeatGround)
+                {
+                    var = Instantiate(groundPrefab[currentGround], positionGround,
+                        groundPrefab[currentGround].transform.rotation);
+                    
+                }
+                else
+                {
+                    countGround = 1;
+                    currentGround++;
+                    var = Instantiate(groundPrefab[currentGround], positionGround, groundPrefab[currentGround].transform.rotation);
+                }
             }
-            Enemy.isDeadBoss = false;
         }
     }
 

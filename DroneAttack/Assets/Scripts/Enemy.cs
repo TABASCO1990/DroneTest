@@ -33,5 +33,14 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        if (gameObject.CompareTag("Enemy"))
+        {
+            health--;
+            Destroy(other.gameObject);
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }
